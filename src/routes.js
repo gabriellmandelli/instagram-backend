@@ -9,19 +9,24 @@ const LikeController = require('./controllers/LikeController');
 const routes = new express.Router();
 const upload = multer(uploadConfig);
 
+// static variable routes
+const ROUTE_POSTS = '/posts';
+const PARM_ID = '/:id';
+const ROUTE_LIKE = '/like';
+
 // Return all posts
-routes.get('/posts', PostController.index);
+routes.get(ROUTE_POSTS, PostController.index);
 
 // Create post
-routes.post('/posts', upload.single('image'), PostController.store);
+routes.post(ROUTE_POSTS, upload.single('image'), PostController.store);
 
 // Remove all posts
-routes.delete('/posts', PostController.removeAll);
+routes.delete(ROUTE_POSTS, PostController.removeAll);
 
 // Remove post byId
-routes.delete('/posts/:id', PostController.removeById);
+routes.delete(ROUTE_POSTS + PARM_ID, PostController.removeById);
 
 // add like in one post byId
-routes.post('/posts/:id/like', LikeController.store);
+routes.post(ROUTE_POSTS + PARM_ID + ROUTE_LIKE, LikeController.store);
 
 module.exports = routes;
